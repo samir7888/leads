@@ -1,6 +1,6 @@
 import SignInForm from '@/components/auth/signIn-form'
+import getSession from '@/lib/getSession';
 import { Metadata } from 'next'
-import { getSession } from 'next-auth/react'
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {

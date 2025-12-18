@@ -43,14 +43,7 @@ export const AppSidebarFooter = () => {
                             className={cn(open && "w-[--radix-popper-anchor-width]")}
                         >
                             <DropdownMenuLabel title={user?.email ?? ""} className="truncate">{user?.email ?? ""}</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem
-                                onClick={() => {
-                                    router.push(`/profile`)
-                                }}
-                            >
-                                <span>Profile</span>
-                            </DropdownMenuItem>
+
                             <DropdownMenuSeparator />
                             <button
                                 type="button"
