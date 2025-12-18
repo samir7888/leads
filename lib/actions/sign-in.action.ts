@@ -20,11 +20,11 @@ export async function signInAction(email: string) {
     }
 
     // check for admin/moderator user
-    // const [adminUser] = await db.select().from(users).where(and(eq(users.email, email), inArray(users.role, ["admin", "moderator"]))).limit(1);
+    const [adminUser] = await db.select().from(users).where(and(eq(users.email, email), inArray(users.role, ["admin", "moderator"]))).limit(1);
 
-    // if (!adminUser) {
-    //     throw new Error("Invalid Email");
-    // }
+    if (!adminUser) {
+        throw new Error("Invalid Email");
+    }
 
     await signIn("resend", { email, redirect: false });
 }

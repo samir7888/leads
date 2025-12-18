@@ -5,11 +5,13 @@ import { ledgers } from "@/db/schema/ledgers";
 import { transactions } from "@/db/schema/transactions";
 import { eq, desc } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import checkAuth from "../checkAuth";
 
 export type Ledger = typeof ledgers.$inferSelect;
 export type Transaction = typeof transactions.$inferSelect;
 
 export async function getLedgerByLeadId(leadId: string) {
+      await checkAuth(['admin'])
     try {
         const ledger = await db.query.ledgers.findFirst({
             where: eq(ledgers.leadId, leadId),
@@ -43,6 +45,7 @@ export async function getLedgerByLeadId(leadId: string) {
 }
 
 export async function createLedger(leadId: string, totalAmount: number) {
+      await checkAuth(['admin'])
     try {
         const [newLedger] = await db.insert(ledgers).values({
             leadId,
@@ -58,6 +61,7 @@ export async function createLedger(leadId: string, totalAmount: number) {
 }
 
 export async function addTransaction(ledgerId: string, amount: number, remarks?: string) {
+      await checkAuth(['admin'])
     try {
         const [newTransaction] = await db.insert(transactions).values({
             ledgerId,

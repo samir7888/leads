@@ -2,11 +2,13 @@
 
 import { db } from "@/db";
 import { leadsTable } from "@/db/schema/leads";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { LeadFormValues } from "../validations/lead.schema";
+import checkAuth from "../checkAuth";
 
 export async function getLeads() {
+    await checkAuth(['admin'])
     try {
         const allLeads = await db.query.leadsTable.findMany({
             orderBy: [desc(leadsTable.createdAt)],
@@ -19,6 +21,7 @@ export async function getLeads() {
 }
 
 export async function getLead(id: string) {
+      await checkAuth(['admin'])
     try {
         const lead = await db.query.leadsTable.findFirst({
             where: eq(leadsTable.id, id),
@@ -34,6 +37,7 @@ export async function getLead(id: string) {
 }
 
 export async function createLead(data: LeadFormValues) {
+      await checkAuth(['admin'])
     try {
         // Validate data? Handled by form typically, but good to have here.
         // For now trusting input from validated form
@@ -47,6 +51,7 @@ export async function createLead(data: LeadFormValues) {
 }
 
 export async function updateLead(id: string, data: Partial<LeadFormValues>) {
+      await checkAuth(['admin'])
     try {
         const [updatedLead] = await db
             .update(leadsTable)
@@ -63,9 +68,10 @@ export async function updateLead(id: string, data: Partial<LeadFormValues>) {
     }
 }
 
-export async function deleteLead(id: string) {
+export async function deleteLead(ids: string[]) {
+      await checkAuth(['admin'])
     try {
-        await db.delete(leadsTable).where(eq(leadsTable.id, id));
+        await db.delete(leadsTable).where(inArray(leadsTable.id, ids));
         revalidatePath("/leadsTable");
         return { success: true };
     } catch (error) {

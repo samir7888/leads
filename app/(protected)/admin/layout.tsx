@@ -7,6 +7,9 @@ import { redirect } from 'next/navigation';
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
 import "../../globals.css";
 import { SessionProvider } from 'next-auth/react';
+import { Suspense } from 'react';
+import { Spinner } from '@/components/ui/spinner';
+import logoutAction from '@/lib/actions/logout.action';
 
 const notoSans = Noto_Sans({ variable: '--font-sans' });
 
@@ -32,16 +35,15 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
     const session = await getSession();
 
-    console.log(session)
 
     if (!session) {
         redirect('/auth/signin?callbackUrl=/');
     }
 
     // allow only admin users
-    // if (!["admin", "moderator"].includes(session.user.role)) {
-    //     await signOut();
-    // }
+    if (!["admin", "moderator"].includes(session.user.role)) {
+        await logoutAction();
+    }
 
     // if (!session.user.profileCompleted) {
     //     redirect('/auth/new-user');
@@ -60,7 +62,11 @@ export default async function RootLayout({ children }: Props) {
                 >
                     <SessionProvider>
                         <SidebarLayout>
-                            {children}
+                            <Suspense fallback={<div className='mt-26 flex justify-center items-center'><Spinner /></div>} >
+
+
+                                {children}
+                            </Suspense>
                         </SidebarLayout>
                     </SessionProvider>
                 </ThemeProvider>
