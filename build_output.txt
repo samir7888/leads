@@ -1,0 +1,64 @@
+
+> lead-track@0.1.0 build D:\Development\lead-track
+> next build
+
+   Γû▓ Next.js 16.0.10 (Turbopack)
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 3 errors:
+./app/auth/signin/verify-request/page.tsx:2:1
+Module not found: Can't resolve '@/components/ui/cloudinary-image'
+  1 | import { Card, CardContent, CardHeader } from "@/components/ui/card";
+> 2 | import CloudinaryImage from "@/components/ui/cloudinary-image";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import { db } from "@/db";
+  4 | import { getSiteSettings } from "@/lib/data-access.ts/site-settings.data";
+  5 | import { Mail } from "lucide-react";
+
+Import map: aliased to relative './components/ui/cloudinary-image' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/auth/signin/page.tsx:2:1
+Module not found: Can't resolve '@/lib/data-access.ts/site-settings.data'
+  1 | import SignInForm from '@/components/auth/signIn-form'
+> 2 | import { getSiteSettings } from '@/lib/data-access.ts/site-settings.data';
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  3 | import { Metadata } from 'next'
+  4 |
+  5 | export const metadata: Metadata = {
+
+Import map: aliased to relative './lib/data-access.ts/site-settings.data' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+./app/auth/signin/verify-request/page.tsx:4:1
+Module not found: Can't resolve '@/lib/data-access.ts/site-settings.data'
+  2 | import CloudinaryImage from "@/components/ui/cloudinary-image";
+  3 | import { db } from "@/db";
+> 4 | import { getSiteSettings } from "@/lib/data-access.ts/site-settings.data";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import { Mail } from "lucide-react";
+  6 | import Link from "next/link";
+  7 | import { redirect } from "next/navigation";
+
+Import map: aliased to relative './lib/data-access.ts/site-settings.data' inside of [project]/
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (./app/auth/signin/verify-request/page.tsx:2:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/auth/signin/page.tsx:2:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (./app/auth/signin/verify-request/page.tsx:4:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+ΓÇëELIFECYCLEΓÇë Command failed with exit code 1.
