@@ -1,12 +1,18 @@
 import SignInForm from '@/components/auth/signIn-form'
 import { Metadata } from 'next'
+import { getSession } from 'next-auth/react'
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: "Sign In",
     description: "Sign in to your account",
 }
 
-export default function SignInPage() {
+export default async function SignInPage() {
+    const session = await getSession();
+
+    if (session) redirect('/admin/leads');
+
     return (
         <SignInForm />
     )

@@ -35,9 +35,8 @@ type Props = {
 export default async function RootLayout({ children }: Props) {
     const session = await getSession();
 
-
     if (!session) {
-        redirect('/auth/signin?callbackUrl=/');
+        redirect('/auth/signin?callbackUrl=/admin/leads');
     }
 
     // allow only admin users

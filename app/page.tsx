@@ -1,7 +1,5 @@
-type Props = {}
+import { redirect } from "next/navigation"
 
-export default function RootPage({ }: Props) {
-    return (
-        <div>RootPage</div>
-    )
+export default function RootPage() {
+    redirect("/admin/leads");
 }
