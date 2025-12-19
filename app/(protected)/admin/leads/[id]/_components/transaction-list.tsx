@@ -23,6 +23,7 @@ export function TransactionList({ transactions }: { transactions: Transaction[] 
                     <TableHeader>
                         <TableRow>
                             <TableHead>Date</TableHead>
+                            <TableHead>Particular</TableHead>
                             <TableHead>Amount</TableHead>
                             <TableHead>Remarks</TableHead>
                         </TableRow>
@@ -30,12 +31,13 @@ export function TransactionList({ transactions }: { transactions: Transaction[] 
                     <TableBody>
                         {transactions.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={3} className="text-center text-muted-foreground">No transactions found.</TableCell>
+                                <TableCell colSpan={4} className="text-center text-muted-foreground">No transactions found.</TableCell>
                             </TableRow>
                         ) : (
                             transactions.map((t) => (
                                 <TableRow key={t.id}>
                                     <TableCell>{format(new Date(t.date), "PPP")}</TableCell>
+                                    <TableCell>{t.particular}</TableCell>
                                     <TableCell className="font-medium">{t.amount.toLocaleString()}</TableCell>
                                     <TableCell>{t.remarks || "-"}</TableCell>
                                 </TableRow>

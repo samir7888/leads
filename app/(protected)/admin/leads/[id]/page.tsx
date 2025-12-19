@@ -56,9 +56,8 @@ export default async function LeadDetailsPage({ params }: { params: Promise<{ id
                         )}
                     </div>
                     <div className="col-span-3 space-y-4">
-                        <LedgerCard ledger={ledger} leadId={lead.id} />
-                        {ledger && ledger.remainingBalance > 0 && <AddTransaction ledger={ledger} ledgerId={ledger.id} />}
-                        {ledger && ledger.remainingBalance == 0 && <p>No payments to be done</p>}
+                        <LedgerCard ledger={ledger} lead={lead} />
+                        {ledger && <AddTransaction ledger={ledger} ledgerId={ledger.id} />}
                     </div>
                 </div>
             </div>

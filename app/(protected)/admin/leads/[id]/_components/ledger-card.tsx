@@ -2,13 +2,15 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { CreateLedgerDialog } from "./create-ledger-dialog";
+import { LeadSelect } from "@/db/schema/leads";
+import { getLedgerByLeadId } from "@/lib/actions/ledger.actions";
 
 interface LedgerCardProps {
-    ledger: any; // Type strictly with Awaited<ReturnType<typeof getLedgerByLeadId>>['data']
-    leadId: string;
+    ledger: Awaited<ReturnType<typeof getLedgerByLeadId>>['data']; // Type strictly with Awaited<ReturnType<typeof getLedgerByLeadId>>['data']
+    lead?: LeadSelect | null
 }
 
-export function LedgerCard({ ledger, leadId }: LedgerCardProps) {
+export function LedgerCard({ ledger, lead }: LedgerCardProps) {
     if (!ledger) {
         return (
             <Card>
@@ -17,7 +19,7 @@ export function LedgerCard({ ledger, leadId }: LedgerCardProps) {
                     <CardDescription>Create a ledger to track payments.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <CreateLedgerDialog leadId={leadId} />
+                    <CreateLedgerDialog lead={lead || undefined} />
                 </CardContent>
             </Card>
         );
@@ -29,17 +31,9 @@ export function LedgerCard({ ledger, leadId }: LedgerCardProps) {
                 <CardTitle>Ledger Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="flex justify-between items-center border-b pb-2">
-                    <span className="text-muted-foreground">Total Fee</span>
+                <div className="flex justify-between items-center">
+                    <span className="text-muted-foreground">Due Amount</span>
                     <span className="font-bold text-lg">{ledger.totalAmount.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center border-b pb-2">
-                    <span className="text-muted-foreground">Total Paid</span>
-                    <span className="font-bold text-lg text-green-600">{ledger.totalPaid.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between items-center pt-2">
-                    <span className="text-muted-foreground">Remaining</span>
-                    <span className="font-bold text-xl text-red-600">{ledger.remainingBalance.toLocaleString()}</span>
                 </div>
             </CardContent>
         </Card>

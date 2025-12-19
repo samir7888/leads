@@ -10,6 +10,7 @@ export const leadSchema = z.object({
     interestedCourse: z.string(),
 });
 
+
 export type LeadFormValues = z.infer<typeof leadSchema>;
 
 export const leadFormDefaultValues: LeadFormValues = {
